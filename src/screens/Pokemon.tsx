@@ -78,10 +78,10 @@ export default function Pokemon({
                   width: `${Math.min(base_stat, 100)}%`,
                   backgroundColor:
                     base_stat > 100
-                      ? "orange"
+                      ? "red"
                       : base_stat > 50
                       ? "green"
-                      : "red",
+                      : "orange",
                 },
               ]}
             />
