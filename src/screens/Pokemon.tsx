@@ -10,13 +10,34 @@ import {
 } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 import getTypeColor from "@/utils/pokemonTypeColors";
+import { useEffect } from "react";
+import Icon from "react-native-vector-icons/FontAwesome5";
 
 export default function Pokemon({
   route,
+  navigation,
 }: StackScreenProps<PkParamListBase, "PokemonStack">) {
   const name = route.params.name;
   const { data, isLoading, isError } = usePokemonInfo(name);
   const backgroundColor = getTypeColor(data?.types.at(0)?.type.name);
+
+  //const
+  useEffect(
+    () =>
+      navigation.setOptions({
+        headerRight: () => null,
+        headerLeft: () => (
+          <Icon
+            name="arrow-left"
+            size={20}
+            style={{ paddingLeft: 20 }}
+            color="white"
+            onPress={() => navigation.goBack()}
+          />
+        ),
+      }),
+    [navigation]
+  );
 
   if (isLoading) return <ActivityIndicator />;
   return (
