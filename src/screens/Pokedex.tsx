@@ -1,5 +1,6 @@
 import PokemonCard from "@/components/PokemonCard";
 import usePokemonList from "@/data/usePokemonList";
+import { safeArea } from "@/styles/safeArea";
 import { useMemo } from "react";
 import {
   SafeAreaView,
@@ -17,10 +18,7 @@ export default function Pokedex() {
     [data]
   );
   return (
-    <SafeAreaView>
-      <Text>Pokèdex</Text>
-      {isLoading && <Text>Loading</Text>}
-      {isError && <Text>Error</Text>}
+    <SafeAreaView style={safeArea.container}>
       {data && (
         <FlatList
           data={pokemonList}

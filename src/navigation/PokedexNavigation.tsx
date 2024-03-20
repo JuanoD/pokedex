@@ -14,8 +14,13 @@ export default function FavoriteNavigation() {
       />
       <Stack.Screen
         name="PokemonStack"
-        component={Pokemon}
-        options={{ title: "Pokemon" }}
+        component={Pokemon as ({}) => JSX.Element}
+        options={{
+          title: "",
+          headerShown: true,
+          headerTransparent: true,
+          headerShadowVisible: false,
+        }}
       />
     </Stack.Navigator>
   );
