@@ -34,6 +34,39 @@ export default function Pokemon({
         }}
         style={styles.image}
       />
+      <View style={styles.types}>
+        {data?.types.map(({ type }) => (
+          <Text
+            key={type.name}
+            style={{ ...styles.pill, backgroundColor: getTypeColor(type.name) }}
+          >
+            {type.name}
+          </Text>
+        ))}
+      </View>
+      <Text style={styles.statsTitle}>Estadísticas Base</Text>
+      {data?.stats.map(({ base_stat, stat }) => (
+        <View style={styles.stat} key={stat.name}>
+          <Text style={styles.statName}>{stat.name}</Text>
+          <Text style={styles.statValue}>{base_stat}</Text>
+          <View style={styles.barBg}>
+            <View
+              style={[
+                styles.bar,
+                {
+                  width: `${Math.min(base_stat, 100)}%`,
+                  backgroundColor:
+                    base_stat > 100
+                      ? "orange"
+                      : base_stat > 50
+                      ? "green"
+                      : "red",
+                },
+              ]}
+            />
+          </View>
+        </View>
+      ))}
     </ScrollView>
   );
 }
@@ -68,5 +101,54 @@ const styles = StyleSheet.create({
   image: {
     width: 250,
     height: 250,
+  },
+  types: {
+    flex: -1,
+    flexDirection: "row",
+    marginTop: 20,
+    alignItems: "center",
+    gap: 20,
+  },
+  pill: {
+    paddingHorizontal: 20,
+    paddingVertical: 5,
+    borderRadius: 20,
+    color: "#fff",
+    fontWeight: "bold",
+    textTransform: "capitalize",
+  },
+  statsTitle: {
+    marginTop: 60,
+    marginBottom: 20,
+    fontWeight: "bold",
+    fontSize: 20,
+  },
+  stat: {
+    flexDirection: "row",
+    gap: 5,
+    alignItems: "center",
+    justifyContent: "flex-start",
+    width: "100%",
+    paddingHorizontal: 20,
+  },
+  statName: {
+    width: 110,
+    textTransform: "capitalize",
+  },
+  statValue: {
+    width: 25,
+    textAlign: "right",
+  },
+  barBg: {
+    position: "relative",
+    flexGrow: 1,
+    borderRadius: 5,
+    height: 5,
+    backgroundColor: "#ccc",
+  },
+  bar: {
+    position: "absolute",
+    height: 5,
+    borderRadius: 5,
   },
 });
