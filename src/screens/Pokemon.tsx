@@ -12,6 +12,9 @@ import { StackScreenProps } from "@react-navigation/stack";
 import getTypeColor from "@/utils/pokemonTypeColors";
 import { useEffect } from "react";
 import Icon from "react-native-vector-icons/FontAwesome5";
+import { useAtomValue } from "jotai";
+import userAtom from "@/atoms/userAtom";
+import useFavorites from "@/data/favorites";
 
 export default function Pokemon({
   route,
@@ -19,13 +22,32 @@ export default function Pokemon({
 }: StackScreenProps<PkParamListBase, "PokemonStack">) {
   const name = route.params.name;
   const { data, isLoading, isError } = usePokemonInfo(name);
+  const id = data?.id;
   const backgroundColor = getTypeColor(data?.types.at(0)?.type.name);
+
+  const user = useAtomValue(userAtom);
+
+  const query = useFavorites();
+  const { addFavorite, removeFavorite, isFavorite } = query;
 
   //const
   useEffect(
     () =>
       navigation.setOptions({
-        headerRight: () => null,
+        headerRight: () => {
+          if (!user) return null;
+          const fav = isFavorite(name);
+          return (
+            <Icon
+              name="heart"
+              solid={fav}
+              size={20}
+              color="white"
+              style={{ paddingRight: 20 }}
+              onPress={() => (fav ? removeFavorite(name) : addFavorite(name))}
+            />
+          );
+        },
         headerLeft: () => (
           <Icon
             name="arrow-left"
@@ -36,7 +58,7 @@ export default function Pokemon({
           />
         ),
       }),
-    [navigation]
+    [navigation, user, name, addFavorite, isFavorite, removeFavorite]
   );
 
   if (isLoading) return <ActivityIndicator />;

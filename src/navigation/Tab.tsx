@@ -29,7 +29,7 @@ export default function TabNavigation() {
         options={{ tabBarLabel: "", tabBarIcon: () => <Pokeball /> }}
       />
       <Tabs.Screen
-        name="Home"
+        name="Account"
         component={Account}
         options={{
           tabBarLabel: "Cuenta",

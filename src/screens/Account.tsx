@@ -1,9 +1,10 @@
-import { SafeAreaView, Text } from "react-native";
+import userAtom from "@/atoms/userAtom";
+import LoginForm from "@/components/account/LoginForm";
+import UserData from "@/components/account/UserData";
+import { useAtomValue } from "jotai";
+import { SafeAreaView } from "react-native";
 
 export default function Account() {
-  return (
-    <SafeAreaView>
-      <Text>Account</Text>
-    </SafeAreaView>
-  );
+  const auth = useAtomValue(userAtom);
+  return <SafeAreaView>{auth ? <UserData /> : <LoginForm />}</SafeAreaView>;
 }

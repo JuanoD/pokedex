@@ -2,7 +2,7 @@ import Paginate from "@/utils/types/paginate";
 
 export type PokemonListItem = {
   name: string;
-  url: string;
+  url?: string;
 };
 
 /**

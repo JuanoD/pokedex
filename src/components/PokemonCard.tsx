@@ -13,7 +13,7 @@ import { useNavigation } from "@react-navigation/core";
 export default function PokemonCard({ name }: PokemonListItem) {
   const navigation = useNavigation();
   const { data, isLoading, isError } = usePokemonInfo(name);
-  if (isLoading || isError) return null;
+  if (isLoading || isError) return <View style={styles.card} />;
   const backgroundColor = getTypeColor(data?.types.at(0)?.type.name);
   return (
     <TouchableWithoutFeedback
